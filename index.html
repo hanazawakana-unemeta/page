@@ -13,6 +13,7 @@
         max-width: 1200px;
         margin: 0 auto;
         background-color: white;
+        position: relative;
       }
 
       header {
@@ -33,22 +34,80 @@
         margin: 0 auto;
         max-width: 100%;
       }
+      #nav {
+        position: absolute;
+        top: 30px;
+        right: 15px;
+        display: flex;
+        color: #777E90;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 16px;
+        cursor: pointer;
+      }
+      .active-nav {
+        color: #000000;
+      }
+      .main {
+        position: relative;
+      }
+      .english-nav {
+        border-right: 1px solid #dbdce0;
+      }
+      .nav-item:hover {
+        opacity: 0.5;
+      }
+      .hide {
+        display: none;
+      }
     </style>
   </head>
   <body>
-
-
-    <main>
-      <section>
-
+    <main class="main">
+      <section id="english">
         <picture>
           <source media="(max-width: 799px)" srcset="./img/1.jpg">
           <source media="(min-width: 800px)" srcset="./img/1.jpg">
           <img src="./img/1.jpg" >
         </picture>
-
+      </section>
+      <section id="japanese">
+        <picture>
+          <source media="(max-width: 799px)" srcset="./img/japanese.jpg">
+          <source media="(min-width: 800px)" srcset="./img/japanese.jpg">
+          <img src="./img/japanese.jpg" >
+        </picture>
       </section>
     </main>
-  
-
-</body></html>
+    <div id="nav">
+      <div data-language="en" class="nav-item active-nav english-nav">English</div>
+      <div data-language="ja" class="nav-item">日本語</div>
+    </div>
+  <script>
+    document.querySelector('#nav').addEventListener('click', (e) => {
+      if (e.target.previousElementSibling) {
+        e.target.previousElementSibling.classList.remove('active-nav')
+      }
+      if (e.target.nextElementSibling) {
+        e.target.nextElementSibling.classList.remove('active-nav')
+      }
+      e.target.classList.add('active-nav');
+      
+      const language = e.target.dataset.language;
+      const japaneseEle = document.querySelector('#japanese')
+      const enEle = document.querySelector('#english')
+      if (language === 'en') {
+        japaneseEle.classList.add('hide');
+        enEle.classList.remove('hide');
+      } else {
+        enEle.classList.add('hide');
+        japaneseEle.classList.remove('hide');
+      }
+    })
+  </script>
+</body>
+</html>
